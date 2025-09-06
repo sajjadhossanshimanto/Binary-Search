@@ -24,6 +24,7 @@ smallest index such that `nums[ans] > ele`
     - possible cheat : find the element. the next index after that pos is ans
     -  but what if the element is not in that list is `upper bound`
 
+    - upper limit is actually nothing but [bst_index+1]
 '''
 #%%
 from typing import List
@@ -60,3 +61,4 @@ p = s.searchInsert(nums = [1,3,5,6], target = 7)
 
 print(p)
 # %%
+#  TODO: implement lower bound

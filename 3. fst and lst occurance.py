@@ -1,0 +1,68 @@
+'''
+https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/description/
+- search in sorted array -> manei binary search
+
+
+
+## prolem is 1st and last index of target
+
+- 1st index -> obiously the most efficient way to find one is bst
+- lst index -> bst from the other side ??
+
+## cheat
+- as the array is sorted all the similar numbers should be one after another
+- can't we just iterate until we find mitchmatch
+'''
+#%%
+from typing import List
+
+
+#%% 
+'''
+notmal binary search can't guranty the pos of 1st occurance
+as the mid point might be any occurrence of the target, not necessarily the first one.
+it only confirms eithget the target exists or not
+'''
+def bst_index(num, target):
+    if not num: return -1
+
+    # optimisation -> as the array is sorted
+    if target<num[0] or target>num[-1]:
+        return -1
+    
+    low, high = 0, len(num)-1# low - inclusive; high - exclusive
+    while low<=high:
+        mid = (low+high)//2
+        if num[mid]==target:
+            return mid
+        elif num[mid]>target:
+            high = mid - 1
+        elif num[mid]<target:
+            low = mid + 1
+    
+    return -1
+
+#%% lower limit
+# def 
+
+#%%
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        fst_idx = bst_index(nums, target)
+        if fst_idx==-1:
+            return -1, -1
+        
+        cur = fst_idx
+        while cur<len(nums) and nums[cur]==nums[fst_idx]:
+            cur+=1
+        
+        return fst_idx, cur-1
+
+s = Solution()
+#%%
+s.searchRange(nums = [], target = 0)
+# %%
+s.searchRange(nums = [5,7,7,8,8,10], target = 8)
+# %%
+s.searchRange(nums = [5,7,7,8,8,10], target = 6)
+# %%

@@ -86,12 +86,40 @@ def lower_limit_bst(num, target):
     return ans
 
 #%%
+def upper_limit_bst(num, target):
+    if not num: return -1
+    if target < num[0] or target > num[-1]:
+        return -1
+
+    ans = -1
+    low, high = 0, len(num) - 1
+    while low <= high:
+        mid = (low + high) // 2
+        if num[mid] == target:
+            ans = mid
+            low = mid + 1
+        elif num[mid] > target:
+            high = mid - 1
+        else:
+            low = mid + 1
+    return ans
+
+#%%
 class Solution:
     def searchRange(self, nums: List[int], target: int) -> List[int]:
         fst_idx = lower_limit_bst(nums, target)
         if fst_idx==-1:
             return -1, -1
         
+        """for finding the last poshere we could have implemented 
+            we could have implemented another bst sarching for the last index of occurance
+            but time complexity would be the same
+
+            in worse case:
+            our iterative approach -> need to iterate the whole array to find the last index 
+            that is O(N)
+            but with binary search will it be log(n) max 🤔
+        """
         cur = fst_idx
         while cur<len(nums) and nums[cur]==nums[fst_idx]:
             cur+=1
